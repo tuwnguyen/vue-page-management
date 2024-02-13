@@ -5,18 +5,23 @@
       :nav-link-click="(index) => activePage = index">
     </nav-bar>
 
-    <page-viewer
+    <create-page
+      :page-created="pageCreated"
+    ></create-page>
+    <!-- <page-viewer
       :page="pages[activePage]">
-    </page-viewer>
+    </page-viewer> -->
 </template>
 <script>
 import NavBar from './components/NavBar.vue';
 import PageViewer from './components/PageViewer.vue';
+import CreatePage from './components/CreatePage.vue';
 
 export default {
   components: {
     NavBar,
-    PageViewer
+    PageViewer,
+    CreatePage,
   },
   data() {
     return {
@@ -32,6 +37,9 @@ export default {
       const res = await fetch('pages.json')
       const data = await res.json()
       this.pages = data
+    },
+    pageCreated(createData) {
+      console.log(createData)
     }
   }
 }
