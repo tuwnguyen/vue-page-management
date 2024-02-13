@@ -19,27 +19,21 @@ export default {
     PageViewer
   },
   data() {
-        return {
-          activePage: 0,
-          pages: [
-            {
-              link: {text:'Home', url: 'index.html'},
-              pageTitle: 'Home Page',
-              content: 'This is the home page content',
-            },
-            {
-              link: {text:'About', url: 'about.html'},
-              pageTitle: 'About Page',
-              content: 'This is the About page content',
-            },
-            {
-              link: {text:'Contact', url: 'contact.html'},
-              pageTitle: 'Contact Page',
-              content: 'This is the Contact page content',
-            },
-          ],
-        }
-      }
+    return {
+      activePage: 0,
+      pages:[],
+    }
+  },
+  created() {
+    this.getPages()
+  },
+  methods: {
+    async getPages() {
+      const res = await fetch('pages.json')
+      const data = await res.json()
+      this.pages = data
+    }
+  }
 }
 </script>
 <style>
