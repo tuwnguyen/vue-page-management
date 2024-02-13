@@ -28,6 +28,9 @@ export default {
   components: {
     NavBarLink
   },
+  created() {
+    this.getThemeSetting()
+  },
   props: [
     `pages`,
     `activePage`,
@@ -45,6 +48,16 @@ export default {
         theme = 'light'
       }
       this.theme = theme
+      this.storeThemeSetting()
+    },
+    storeThemeSetting() {
+      localStorage.setItem('theme', this.theme)
+    },
+    getThemeSetting() {
+      let theme = localStorage.getItem('theme')
+      if(theme) {
+        this.theme = theme
+      }
     }
   }
 }
