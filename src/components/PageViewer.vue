@@ -1,6 +1,6 @@
 <template>
   <div id="content" class="container">
-    <h1>{{page.pageTitle}}</h1>
+    <h1 class="title-color">{{page.pageTitle}}</h1>
     <p>{{page.content}}</p>
   </div>
 </template>
@@ -11,6 +11,8 @@ export default {
   ],
 }
 </script>
-<style>
-  
+<style scoped>
+  .title-color {
+    color: blue;
+  }
 </style>

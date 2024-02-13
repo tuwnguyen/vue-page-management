@@ -6,13 +6,11 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li v-for="(page, index) in pages" class="navItem" :key="index">
-            <a 
-            class="nav-link"
-            :class="{active: index === activePage}"
-            :href="page.link.url"
-            :title="`This redirect to ${page.link.text} page`"
+            <nav-bar-link
+            :page="page"
+            :isActive="index === activePage"
             @click.prevent="navLinkClick(index)">
-            {{page.link.text}}</a>
+            </nav-bar-link>
           </li>
         </ul>
       </div>
@@ -25,7 +23,11 @@
     </nav>
 </template>
 <script>
+import NavBarLink from './NavBarLink.vue'
 export default {
+  components: {
+    NavBarLink
+  },
   props: [
     `pages`,
     `activePage`,
@@ -33,14 +35,14 @@ export default {
   ],
   data() {
     return {
-      theme: `light`
+      theme: `dark`
     }
   },
   methods: {
     changeTheme() {
-      let theme = 'light'
+      let theme = 'dark'
       if(theme === this.theme) {
-        theme = 'dark'
+        theme = 'light'
       }
       this.theme = theme
     }
