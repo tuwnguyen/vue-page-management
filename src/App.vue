@@ -1,13 +1,13 @@
 <template>
-    <NavBar
+    <nav-bar
       :pages="pages"
       :active-page="activePage"
       :nav-link-click="(index) => activePage = index">
-    </NavBar>
+    </nav-bar>
 
-    <PageViewer
+    <page-viewer
       :page="pages[activePage]">
-    </PageViewer>
+    </page-viewer>
 </template>
 <script>
 import NavBar from './components/NavBar.vue';
