@@ -56,6 +56,7 @@
       <div class="mb-3">
         <button 
         class="btn btn-primary"
+        :disabled="isFormInValid"
         @click.prevent="submitForm"
         >
           Create Page
@@ -75,9 +76,22 @@ export default {
       linkURL: '',
     }
   },
+  computed: {
+    isFormInValid() {
+      if(!this.pageTitle || !this.content || !this.linkURL || !this.linkText) return true
+      return false
+    }
+  },
   methods: {
     submitForm() {
-      
+      this.pageCreated({
+        pageTitle: this.pageTitle,
+        content: this.content,
+        link: {
+          text: this.linkText,
+          url: this.linkURL,
+        }
+      })
     }
   }
 }
