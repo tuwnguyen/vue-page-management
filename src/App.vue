@@ -38,8 +38,8 @@ export default {
       const data = await res.json()
       this.pages = data
     },
-    pageCreated(createData) {
-      console.log(createData)
+    pageCreated(pageObj) {
+      this.pages.push(pageObj)
     }
   }
 }

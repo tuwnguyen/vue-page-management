@@ -5,7 +5,7 @@
     >
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li v-for="(page, index) in pages" class="navItem" :key="index">
+          <li v-for="(page, index) in pagesPublished" class="navItem" :key="index">
             <nav-bar-link
             :page="page"
             :isActive="index === activePage"
@@ -36,6 +36,11 @@ export default {
     `activePage`,
     `nav-link-click`,
   ],
+  computed: {
+    pagesPublished() {
+      return this.pages.filter(p => p.published)
+    }
+  },
   data() {
     return {
       theme: `dark`
