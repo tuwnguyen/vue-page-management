@@ -67,7 +67,6 @@
 </template>
 <script>
 export default {
-  props: ['pageCreated'],
   data() {
     return {
       pageTitle: '',
@@ -75,6 +74,13 @@ export default {
       linkText: '',
       linkURL: '',
       published: true,
+    }
+  },
+  emits: {
+    pageCreated({pageTitle, content, link}) {
+      if(!pageTitle) return false
+      return true
+      ///...
     }
   },
   computed: {
@@ -85,7 +91,7 @@ export default {
   },
   methods: {
     submitForm() {
-      this.pageCreated({
+      this.$emit('pageCreated', {
         pageTitle: this.pageTitle,
         content: this.content,
         link: {
@@ -94,6 +100,7 @@ export default {
         },
         published: this.published
       })
+      
       this.pageTitle= ''
       this.content= ''
       this.linkText= ''

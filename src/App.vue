@@ -6,7 +6,7 @@
     </nav-bar>
 
     <create-page
-      :page-created="pageCreated"
+      @page-created="pageCreated"
     ></create-page>
     <!-- <page-viewer
       :page="pages[activePage]">
