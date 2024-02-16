@@ -5,13 +5,12 @@
     >
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li v-for="(page, index) in pagesPublished" class="navItem" :key="index">
             <nav-bar-link
-            :page="page"
-            :isActive="index === activePage"
-            @click.prevent="navLinkClick(index)">
+              v-for="(page, index) in pagesPublished" class="navItem" :key="index"
+              :page="page"
+              :isActive="index === activePage"
+              :index="index">
             </nav-bar-link>
-          </li>
         </ul>
       </div>
       <form class="d-flex">
@@ -34,7 +33,6 @@ export default {
   props: [
     `pages`,
     `activePage`,
-    `nav-link-click`,
   ],
   computed: {
     pagesPublished() {

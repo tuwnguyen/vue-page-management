@@ -2,15 +2,16 @@
     <nav-bar
       :pages="pages"
       :active-page="activePage"
-      :nav-link-click="(index) => activePage = index">
+    >
     </nav-bar>
+
+    <page-viewer
+      :page="pages[activePage]">
+    </page-viewer>
 
     <create-page
       @page-created="pageCreated"
     ></create-page>
-    <!-- <page-viewer
-      :page="pages[activePage]">
-    </page-viewer> -->
 </template>
 <script>
 import NavBar from './components/NavBar.vue';
@@ -31,6 +32,9 @@ export default {
   },
   created() {
     this.getPages()
+    this.$bus.$on('navbarLinkActived', (index) => {
+      this.activePage = index
+    })
   },
   methods: {
     async getPages() {
