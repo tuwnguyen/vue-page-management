@@ -5,13 +5,14 @@
     >
     </nav-bar>
 
-    <page-viewer
+    <router-view></router-view>
+    <!-- <page-viewer
       :page="pages[activePage]">
     </page-viewer>
 
     <create-page
       @page-created="pageCreated"
-    ></create-page>
+    ></create-page> -->
 </template>
 <script>
 import NavBar from './components/NavBar.vue';
