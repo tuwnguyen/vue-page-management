@@ -12,12 +12,12 @@
             </nav-bar-link>
             <li>
               <router-link
-                :to="`/pages/create`"
+                :to="`/pages`" 
                 class="nav-link"
                 active-class="active"
                 aria-current="page"
               >
-                Create Page
+                Pages
               </router-link>
           </li>
         </ul>
@@ -36,6 +36,7 @@ export default {
   components: {
     NavBarLink
   },
+  inject:['$pages'],
   created() {
     this.getThemeSetting()
     this.pages = this.$pages.getAllPages()
