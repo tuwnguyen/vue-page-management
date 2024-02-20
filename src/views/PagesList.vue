@@ -1,8 +1,8 @@
 <template>
-  <h4>Pages</h4>
+  <h4>List pages</h4>
   <div class="text-end">
     <router-link 
-      to="`/pages/create`"
+      to="/pages/create"
       class="btn btn-primary btn-sm"
     >New Page</router-link>
   </div>
@@ -16,7 +16,7 @@
     </thead>
     <tbody>
       <tr
-        v-for="(page, index) in $pages.getAllPages()"
+        v-for="(page, index) in pages.getAllPages()"
         :key="index"
         @click="goToPage(index)"
       >
@@ -33,7 +33,7 @@ import { ref, reactive, inject } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
-const $pages = inject('$pages')
+const pages = inject('$pages')
 
 function goToPage(index) {
   router.push({path: `pages/${index}/edit`})

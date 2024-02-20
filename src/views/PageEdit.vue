@@ -33,16 +33,7 @@
           <input 
           type="text" 
           class="form-control"
-          v-model="page.linkText">
-        </div>
-        <div class="mb-3">
-          <label for="" class="form-label">
-            Link URL
-          </label>
-          <input 
-          type="text" 
-          class="form-control"
-          v-model="page.linkURL">
+          v-model="page.link.text">
         </div>
         <div class="row mb-3">
           <div class="form-check">
@@ -56,16 +47,22 @@
     </div>
     <div class="mb-3">
       <button 
-        class="btn btn-primary"
+        class="btn btn-primary me-2"
         @click.prevent="submit"
       >
         Edit
       </button>
       <button
-        class="btn btn-secondary"
+        class="btn btn-secondary me-2"
         @click.prevent="goToPageList"
       >
         Cancel
+      </button>
+      <button
+        class="btn btn-danger"
+        @click.prevent="delPage"
+      >
+        Delete
       </button>
     </div>
   </form>
@@ -86,6 +83,12 @@
   function submit() {
     pages.editPage(index, page)
     bus.$emit('page-updated')
+    goToPageList()
+  }
+
+  function delPage() {
+    pages.delPage(index)
+    bus.$emit('page-deleted')
     goToPageList()
   }
 
