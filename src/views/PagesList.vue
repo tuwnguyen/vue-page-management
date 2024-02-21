@@ -1,4 +1,5 @@
 <template>
+  <h3>{{ count }}</h3>
   <h4>List pages</h4>
   <div class="text-end">
     <router-link 
@@ -28,17 +29,29 @@
   </table>
 </template>
 
-<script setup>
+<script>
+
 import { ref, reactive, inject } from "vue"
 import { useRouter } from "vue-router"
+import { useStore } from "vuex"
 
-const router = useRouter()
-const pages = inject('$pages')
-
-function goToPage(index) {
-  router.push({path: `pages/${index}/edit`})
+export default {
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const pages = inject('$pages')
+    const count = store.state.count
+    function goToPage(index) {
+      router.push({path: `pages/${index}/edit`})
+    }
+    
+    return {
+      pages,
+      count,
+      goToPage
+    }
+  }
 }
-
 </script>
 
 <style scoped>
