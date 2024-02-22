@@ -1,5 +1,5 @@
 import { createStore, createLogger } from 'vuex';
-
+import { INCREASE } from './mutation-types';
 export default createStore({
   strict: true,
 
@@ -10,18 +10,18 @@ export default createStore({
   },
 
   getters: {
-    count: (state) => state.count,
+    checkCount: (state) => (state.count ? true : false),
   },
 
   mutations: {
-    increment(state) {
-      state.count++;
+    [INCREASE](state, payload) {
+      state.count += payload.amount;
     },
   },
 
   actions: {
-    increment(context) {
-      context.commit('increment');
+    increase(context, payload) {
+      context.commit('INCREASE', payload);
     },
   },
 });

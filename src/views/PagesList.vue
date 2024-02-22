@@ -1,5 +1,11 @@
 <template>
+  <h3>{{ checkCount }}</h3>
   <h3>{{ count }}</h3>
+  <button 
+    class="btn btn-primary"
+    @click.preven="increase"
+  >Increase
+  </button>
   <h4>List pages</h4>
   <div class="text-end">
     <router-link 
@@ -33,23 +39,30 @@
 
 import { ref, reactive, inject } from "vue"
 import { useRouter } from "vue-router"
-import { useStore } from "vuex"
-
+import { useStore, mapGetters, mapState} from "vuex"
 export default {
   setup() {
     const store = useStore()
     const router = useRouter()
     const pages = inject('$pages')
-    const count = store.state.count
     function goToPage(index) {
       router.push({path: `pages/${index}/edit`})
+    }
+
+    function increase() {
+      store.dispatch('increase', {amount: 10})
     }
     
     return {
       pages,
-      count,
-      goToPage
+      goToPage,
+      increase
     }
+  },
+
+  computed: {
+    ...mapState(['count']),
+    ...mapGetters(['checkCount'])
   }
 }
 </script>
