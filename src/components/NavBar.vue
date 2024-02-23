@@ -40,7 +40,6 @@
   const theme = ref('dark')
   const pages = ref([])
   pages.value = computed(() => store.getters['pages/getPublishedPages']).value
-  console.log(theme.value)
   const computedClasses = computed(() => ({
     'navbar': true,
     'navbar-expand-lg': true,

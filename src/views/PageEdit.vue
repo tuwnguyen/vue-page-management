@@ -70,25 +70,29 @@
 
 <script setup>
   import { useRouter } from 'vue-router'
-  import { inject } from 'vue';
-
+  import { inject, ref, computed } from 'vue';
+  import { useStore } from 'vuex'
   
   const router = useRouter()
+  const store = useStore()
   const { index } = defineProps(['index'])
-
+  const page = ref({})
+  
+  const pageGetter = computed(() => store.getters['pages/getSinglePage'](index)).value
+  // const pageGetter = store.getters['pages/getSinglePage'](index)
+  page.value = {...pageGetter, link: { ...pageGetter.link}}
+  
   const bus  = inject('$bus')
-  const pages = inject('$pages')
-  const page = pages.getSinglePage(index)
 
   function submit() {
-    pages.editPage(index, page)
-    bus.$emit('page-updated')
+    store.dispatch('pages/editPage', {index, page: page.value})
+    // bus.$emit('page-updated')
     goToPageList()
   }
 
   function delPage() {
-    pages.delPage(index)
-    bus.$emit('page-deleted')
+    store.dispatch('pages/delPage', {index})
+    // bus.$emit('page-deleted')
     goToPageList()
   }
 

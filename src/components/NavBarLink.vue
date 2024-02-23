@@ -1,24 +1,24 @@
 <template>
   <li>
     <router-link
-      :to="`/${index}`"
+      :to="`/${props.index}`"
       class="nav-link"
       active-class="active emphasize"
       aria-current="page"
-      :title="`This redirect to ${page.link.text} page`"
+      :title="`This redirect to ${props.page.link.text} page`"
     >
-      {{page.link.text}}
+      {{props.page.link.text}}
     </router-link>
   </li>
 </template>
-<script>
-export default {
-  props: [
-    'index',
-    'page',
-    'isActive',
-  ],
-}
+<script setup>
+  import { defineProps } from 'vue';
+
+  const props = defineProps({
+    index: Number,
+    page: Object,
+    isActive: Boolean
+  })
 </script>
 <style scoped>
 

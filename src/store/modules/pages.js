@@ -1,7 +1,7 @@
 import data from '@/data';
 
 const state = () => ({
-  pages: [1, 2, 3, 4],
+  pages: [],
 });
 
 const getters = {

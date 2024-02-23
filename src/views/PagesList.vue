@@ -1,11 +1,4 @@
 <template>
-  <h3>{{ checkCount }}</h3>
-  <h3>{{ count }}</h3>
-  <button 
-    class="btn btn-primary"
-    @click.prevent="increase"
-  >Increase
-  </button>
   <h4>List pages</h4>
   <div class="text-end">
     <router-link 
@@ -23,7 +16,7 @@
     </thead>
     <tbody>
       <tr
-        v-for="(page, index) in pages.getAllPages()"
+        v-for="(page, index) in pages"
         :key="index"
         @click="goToPage(index)"
       >
@@ -37,26 +30,21 @@
 
 <script>
 
-import { ref, reactive, inject } from "vue"
+import { computed } from "vue"
 import { useRouter } from "vue-router"
-import { useStore, mapGetters, mapState} from "vuex"
+import { useStore } from "vuex"
 export default {
   setup() {
     const store = useStore()
     const router = useRouter()
-    const pages = inject('$pages')
+    const pages = computed(() => store.getters['pages/pages']).value
     function goToPage(index) {
       router.push({path: `pages/${index}/edit`})
     }
 
-    function increase() {
-      store.dispatch('increase', {amount: 10})
-    }
-    
     return {
       pages,
       goToPage,
-      increase
     }
   },
 

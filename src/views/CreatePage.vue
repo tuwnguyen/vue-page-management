@@ -58,9 +58,11 @@
 </template>
 <script setup>
   import { ref, inject, computed, watch } from 'vue';
+  import { useStore } from "vuex"
   import { useRouter } from 'vue-router';
+  
+  const store = useStore()
   const bus = inject('$bus')
-  const pages = inject('$pages')
   const router = useRouter()
 
   const pageTitle = ref('')
@@ -77,7 +79,7 @@
     }
   )
   function submitForm() {
-    let newPage = {
+    let page = {
       pageTitle: pageTitle.value,
       content: content.value,
       link: {
@@ -85,8 +87,7 @@
       },
       published: published.value,
     }
-
-    pages.createPage(newPage)
+    store.dispatch('pages/createPage', {page})
     
     bus.$emit('page-created')
     router.push('/pages')
