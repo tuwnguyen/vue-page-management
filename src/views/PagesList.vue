@@ -3,7 +3,7 @@
   <h3>{{ count }}</h3>
   <button 
     class="btn btn-primary"
-    @click.preven="increase"
+    @click.prevent="increase"
   >Increase
   </button>
   <h4>List pages</h4>
@@ -60,10 +60,6 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(['count']),
-    ...mapGetters(['checkCount'])
-  }
 }
 </script>
 

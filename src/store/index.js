@@ -1,5 +1,6 @@
 import { createStore, createLogger } from 'vuex';
 import { INCREASE } from './mutation-types';
+import pages from './modules/pages';
 export default createStore({
   strict: true,
 
@@ -23,5 +24,8 @@ export default createStore({
     increase(context, payload) {
       context.commit('INCREASE', payload);
     },
+  },
+  modules: {
+    pages,
   },
 });
