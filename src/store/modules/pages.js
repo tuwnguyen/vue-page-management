@@ -9,6 +9,7 @@ const getters = {
   getSinglePage: (state) => (index) => {
     return state.pages[index];
   },
+  getPublishedPages: (state) => state.pages.filter((page) => page.published),
 };
 
 const mutations = {

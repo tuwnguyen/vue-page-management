@@ -1,12 +1,12 @@
 <template>
     <nav 
     class="navbar navbar-expand-lg"
-    :class="[`navbar-${theme}`, `bg-${theme}`, `navbar navbar-expand-lg`]"
+    :class="computedClasses"
     >
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <nav-bar-link
-              v-for="(page, index) in pagesPublished" class="navItem" :key="index"
+              v-for="(page, index) in pages" class="navItem" :key="index"
               :page="page"
               :index="index">
             </nav-bar-link>
@@ -30,61 +30,59 @@
       </form>
     </nav>
 </template>
-<script>
-import NavBarLink from './NavBarLink.vue'
-export default {
-  components: {
-    NavBarLink
-  },
-  inject:['$pages', '$bus'],
-  created() {
-    this.getThemeSetting()
-    this.pages = this.$pages.getAllPages()
 
-    this.$bus.$on('page-updated', () => {
-      this.pages = [...this.$pages.getAllPages()]
-    })
+<script setup>
+  import { ref, computed } from 'vue'
+  import { useStore } from 'vuex'
+  import NavBarLink from './NavBarLink.vue'
 
-    this.$bus.$on('page-created', () => {
-      this.pages = [...this.$pages.getAllPages()]
-    })
+  const store = useStore()
+  const theme = ref('dark')
+  const pages = ref([])
+  pages.value = computed(() => store.getters['pages/getPublishedPages']).value
+  console.log(theme.value)
+  const computedClasses = computed(() => ({
+    'navbar': true,
+    'navbar-expand-lg': true,
+    [`navbar-${theme.value}`]: true,
+    [`bg-${theme.value}`]: true,
+  }))
 
-    this.$bus.$on('page-deleted', () => {
-      this.pages = [...this.$pages.getAllPages()]
-    })
-  },
-  computed: {
-    pagesPublished() {
-      return this.pages.filter(p => p.published)
+  getThemeSetting()
+
+  // this.$bus.$on('page-updated', () => {
+  //   this.pages = [...this.$pages.getAllPages()]
+  // })
+
+  // this.$bus.$on('page-created', () => {
+  //   this.pages = [...this.$pages.getAllPages()]
+  // })
+
+  // this.$bus.$on('page-deleted', () => {
+  //   this.pages = [...this.$pages.getAllPages()]
+  // })
+
+  function changeTheme() {
+    let _theme = 'dark'
+    if(_theme === theme.value) {
+      _theme = 'light'
     }
-  },
-  data() {
-    return {
-      theme: `dark`,
-      pages: []
-    }
-  },
-  methods: {
-    changeTheme() {
-      let theme = 'dark'
-      if(theme === this.theme) {
-        theme = 'light'
-      }
-      this.theme = theme
-      this.storeThemeSetting()
-    },
-    storeThemeSetting() {
-      localStorage.setItem('theme', this.theme)
-    },
-    getThemeSetting() {
-      let theme = localStorage.getItem('theme')
-      if(theme) {
-        this.theme = theme
-      }
+    theme.value = _theme
+    storeThemeSetting()
+  }
+
+  function storeThemeSetting() {
+    localStorage.setItem('theme', theme.value)
+  }
+
+  function getThemeSetting() {
+    let _theme = localStorage.getItem('theme')
+    if(_theme) {
+      theme.value = _theme
     }
   }
-}
 </script>
+
 <style>
   
 </style>
