@@ -5,16 +5,15 @@
 </template>
 <script>
 import NavBar from './components/NavBar.vue';
-
+import { useStore } from "vuex"
 export default {
   components: {
     NavBar,
   },
-  methods: {
-    pageCreated(pageObj) {
-      this.pages.push(pageObj)
-    }
-  }
+  setup() {
+    const store = useStore()
+    store.dispatch('pages/getAllPages')
+  },
 }
 </script>
 <style>

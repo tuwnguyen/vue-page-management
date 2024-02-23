@@ -4,29 +4,35 @@
     <p>{{ page.content }}</p>
   </div>
 </template>
+
 <script>
+import { watch, computed, ref } from 'vue';
+import { useStore, mapGetters } from "vuex"
 export default {
   props: ['index'],
-  inject: ['$pages'],
-  created() {
-    this.page = this.$pages.getSinglePage(this.$route.params.index)
+  setup(props) {
+    const store = useStore()
+    const page = ref(getSinglePage(props.index))
+    
+    watch(() => props.index, (newIndex, oldIndex) => {
+      page.value = getSinglePage(newIndex)
+    })
 
-    // way to watch params to change the page
-    // this.$watch(() => this.$route.params, (newParams, prevParams) => {
-    //   this.page = this.$pages.getSinglePage(newParams.index)
-    // })
-  },
-  data() {
+    function getSinglePage(index) {
+      const getPage = computed(() => {
+        return (_idx) => {
+          return store.getters['pages/getSinglePage'](_idx)
+        }
+      }).value
+
+      return getPage(index)
+    }
     return {
-      page: {},
+      page,
     }
   },
-  watch: {
-    index(newIndex, prevIndex) {
-      this.page = this.$pages.getSinglePage(newIndex)
-    }
-  }
 }
+
 </script>
 <style scoped>
   .title-color {
