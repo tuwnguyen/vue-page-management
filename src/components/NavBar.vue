@@ -32,14 +32,16 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, inject } from 'vue'
   import { useStore } from 'vuex'
   import NavBarLink from './NavBarLink.vue'
 
   const store = useStore()
+  const $bus = inject('$bus')
   const theme = ref('dark')
   const pages = ref([])
-  pages.value = computed(() => store.getters['pages/getPublishedPages']).value
+  const pagesGetter = computed(() => store.getters['pages/getPublishedPages']).value
+  pages.value = pagesGetter
   const computedClasses = computed(() => ({
     'navbar': true,
     'navbar-expand-lg': true,
@@ -49,17 +51,17 @@
 
   getThemeSetting()
 
-  // this.$bus.$on('page-updated', () => {
-  //   this.pages = [...this.$pages.getAllPages()]
-  // })
+  $bus.$on('page-updated', () => {
+    pages.value = store.getters['pages/getPublishedPages']
+  })
 
-  // this.$bus.$on('page-created', () => {
-  //   this.pages = [...this.$pages.getAllPages()]
-  // })
+  $bus.$on('page-created', () => {
+    pages.value = store.getters['pages/getPublishedPages']
+  })
 
-  // this.$bus.$on('page-deleted', () => {
-  //   this.pages = [...this.$pages.getAllPages()]
-  // })
+  $bus.$on('page-deleted', () => {
+    pages.value = store.getters['pages/getPublishedPages']
+  })
 
   function changeTheme() {
     let _theme = 'dark'

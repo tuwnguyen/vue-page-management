@@ -20,29 +20,29 @@ const mutations = {
 
 const actions = {
   getAllPages({ commit }) {
-    const pages = data.getAllPages();
-    commit('setPages', { pages });
+    setPages(commit);
   },
 
   editPage({ commit }, { index, page }) {
     data.editPage(index, page);
-    const pages = data.getAllPages();
-    commit('setPages', { pages });
+    setPages(commit);
   },
 
   createPage({ commit }, { page }) {
     data.createPage(page);
-    const pages = data.getAllPages();
-    commit('setPages', { pages });
+    setPages(commit);
   },
 
   delPage({ commit }, { index }) {
     data.delPage(index);
-    const pages = data.getAllPages();
-    commit('setPages', { pages });
+    setPages(commit);
   },
 };
 
+function setPages(commit) {
+  const pages = data.getAllPages();
+  commit('setPages', { pages });
+}
 export default {
   namespaced: true,
   state,

@@ -9,7 +9,8 @@ export default {
   },
 
   $off(eventName, fn) {
-    throw { message: 'Not implemented' };
+    if (!events.get(eventName)) return;
+    events.delete(eventName);
   },
 
   $emit(eventName, data) {

@@ -86,13 +86,13 @@
 
   function submit() {
     store.dispatch('pages/editPage', {index, page: page.value})
-    // bus.$emit('page-updated')
+    bus.$emit('page-updated')
     goToPageList()
   }
 
   function delPage() {
     store.dispatch('pages/delPage', {index})
-    // bus.$emit('page-deleted')
+    bus.$emit('page-deleted')
     goToPageList()
   }
 
