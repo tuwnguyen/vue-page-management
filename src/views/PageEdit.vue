@@ -1,5 +1,5 @@
 <template>
-  <h4>Edit {{ page.pageTitle }}: </h4>
+  <h4>Edit {{ pageTitleShow }}: </h4>
   <form class="container mb-3" action="">
     <div class="row">
       <div class="col-md-8">
@@ -75,14 +75,17 @@
   
   const router = useRouter()
   const store = useStore()
+  const bus  = inject('$bus')
   const { index } = defineProps(['index'])
-  const page = ref({})
   
+  const page = ref({})
+  let pageTitleShow = ''
   const pageGetter = computed(() => store.getters['pages/getSinglePage'](index)).value
   // const pageGetter = store.getters['pages/getSinglePage'](index)
   page.value = {...pageGetter, link: { ...pageGetter.link}}
+  pageTitleShow = page.value.pageTitle
+
   
-  const bus  = inject('$bus')
 
   function submit() {
     store.dispatch('pages/editPage', {index, page: page.value})
